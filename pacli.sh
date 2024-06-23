@@ -150,7 +150,7 @@ check_dev_urls_in_db() {
     local project_path="$1"
     echo "Checking for development URLs in the database..."
     ./wp-cli.phar db export --path="$project_path" db.sql
-    dev_urls=$(grep -oP '[a-z0-9_-]+(\.[a-z0-9_-]+)*(\.dev|\.test|\.local|\.lndo\.site|localhost[a-z0-9_-]*)' db.sql | sort | uniq)
+    dev_urls=$(grep -oP '(localhost(:[0-9]+)?/[a-z0-9_-]+|[a-z0-9_-]+(\.[a-z0-9_-]+)*(\.dev|\.test|\.local|\.lndo\.site))' db.sql | sort | uniq)
     if [ -n "$dev_urls" ]; then
         echo "Development URLs found:"
         echo "$dev_urls"
